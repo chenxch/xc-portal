@@ -14,21 +14,25 @@
         </ol>
       </nav>
     </header>
+    <div>
+      <input v-model="text"/><button @click="sure">传给微应用</button>
+    </div>
     <div id="appContainer" />
   </div>
 </template>
 
 <script>
-  import { registerMicroApps, runAfterFirstMounted, setDefaultMountApp, start } from 'qiankun'
+  import { registerMicroApps, runAfterFirstMounted, setDefaultMountApp, start, initGlobalState } from 'qiankun'
 
 	export default {
     name: 'master',
 		data () {
       return {
         apps: [
-          { name: 'xc-micro-app', entry: '//localhost:8081', container: '#appContainer', activeRule: '/xc-micro-app' },
-          { name: 'xc-grafana', entry: '//localhost:8082', container: '#appContainer', activeRule: '/xc-grafana' }
-        ]
+          { name: 'A应用', entry: 'http://192.168.17.231:9090/xc/MicroApp/', container: '#appContainer', activeRule: '/xc-micro-app' },
+          { name: 'B应用', entry: '//localhost:8082', container: '#appContainer', activeRule: '/xc-grafana' }
+        ],
+        text: ''
       }
     },
     created () {
@@ -76,6 +80,13 @@
         })
 
         start({ prefetch: true })
+      },
+      sure(){
+        if(this.text){
+          const state = { text:this.text};
+            const actions = initGlobalState(state);
+            actions.setGlobalState(state);
+        }
       }
 		}
 	}
