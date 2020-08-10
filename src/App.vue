@@ -43,7 +43,8 @@
           </div>
         </el-header>
         <el-main>
-          <div id="appContainer" />
+          <div id="appA" />
+          <div id="appB"/>
         </el-main>
       </div>
     </el-container>
@@ -66,14 +67,15 @@ export default {
       apps: [
         {
           name: "A应用",
-          entry: "http://192.168.17.231:9090/xc/MicroApp/",
-          container: "#appContainer",
-          activeRule: "/xc-micro-app",
+          entry: '//localhost:8081',//"http://192.168.17.231:9090/xc/MicroApp/",
+          container: "#appA",
+          activeRule: "/xc-micro-app"
+          // sandbox: {experimentalStyleIsolation: true}
         },
         {
           name: "B应用",
           entry: "//localhost:8082",
-          container: "#appContainer",
+          container: "#appB",
           activeRule: "/xc-grafana",
         },
       ],
