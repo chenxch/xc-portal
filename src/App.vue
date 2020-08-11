@@ -73,17 +73,17 @@ export default {
       apps: [
         {
           name: "A应用",
-          entry: '//localhost:8081',//"http://192.168.17.231:9090/xc/MicroApp/",
+          entry: "http://192.168.17.231:9090/xc/MicroApp/",
           container: "#appA",
-          activeRule: "/xc-micro-app",
+          activeRule: "/xc/Portal/xc-micro-app",
           childrens:[
             {
               name:'A1',
-              path:'/xc-micro-app#/'
+              path:'/xc/Portal/xc-micro-app#/'
             },
             {
               name:'A2',
-              path:'/xc-micro-app#/about'
+              path:'/xc/Portal/xc-micro-app#/about'
             }
           ]
           // sandbox: {experimentalStyleIsolation: true}
@@ -133,7 +133,7 @@ export default {
         ],
       });
 
-      setDefaultMountApp("/slave");
+      setDefaultMountApp("/xc/Portal/xc-micro-app");
 
       runAfterFirstMounted(() => {
         // eslint-disable-next-line no-console
