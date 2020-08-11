@@ -29,11 +29,17 @@
           active-text-color="#1890ff"
           :collapse="isCollapse"
         >
-          <el-menu-item :index="item.activeRule" v-for="item in apps" :key="item.activeRule">
+        <div  v-for="item in apps" :key="item.activeRule">
+          <el-submenu :index="item.activeRule" v-if="item.childrens">
+            <template slot="title">{{item.name}}</template>
+            <el-menu-item :index="child.path" v-for="child in item.childrens" :key="child.path">{{child.name}}</el-menu-item>
+          </el-submenu>
+          <el-menu-item :index="item.activeRule" v-else>
               <i class="el-icon-location"></i>
               <span>{{item.name}}</span>
               <!-- <el-menu-item index="1-1">选项1</el-menu-item> -->
           </el-menu-item>
+        </div>
         </el-menu>
       </el-aside>
       <div class="hm">
@@ -69,7 +75,17 @@ export default {
           name: "A应用",
           entry: '//localhost:8081',//"http://192.168.17.231:9090/xc/MicroApp/",
           container: "#appA",
-          activeRule: "/xc-micro-app"
+          activeRule: "/xc-micro-app",
+          childrens:[
+            {
+              name:'A1',
+              path:'/xc-micro-app#/'
+            },
+            {
+              name:'A2',
+              path:'/xc-micro-app#/about'
+            }
+          ]
           // sandbox: {experimentalStyleIsolation: true}
         },
         {
