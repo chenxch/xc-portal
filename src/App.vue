@@ -75,7 +75,7 @@ export default {
       apps: [
         {
           name: "A应用",
-          entry: '//192.168.17.120:8081',//"http://192.168.17.231:9090/xc/MicroApp/",
+          entry: '//localhost:8081',//"http://192.168.17.231:9090/xc/MicroApp/",
           container: "#appA",
           activeRule: "/microApp/xc-micro-app",
           childrens:[
@@ -90,12 +90,12 @@ export default {
           ]
           // sandbox: {experimentalStyleIsolation: true}
         },
-        {
-          name: "B应用",
-          entry: "//192.168.17.120:8082",
-          container: "#appB",
-          activeRule: "/xc-grafana",
-        },
+        // {
+        //   name: "B应用",
+        //   entry: "//192.168.17.120:8082",
+        //   container: "#appB",
+        //   activeRule: "/xc-grafana",
+        // },
       ],
       text: "",
       isCollapse: false,
