@@ -21,6 +21,11 @@ actions.onGlobalStateChange((state, prev) => {
 actions.setGlobalState(state);
 actions.offGlobalStateChange();
 Vue.config.productionTip = false
+router.beforeEach((to, from, next) => {
+  if(to.path.indexOf('/microApp')===-1){
+    next();
+  }
+})
 
 new Vue({
   store,

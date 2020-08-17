@@ -28,8 +28,9 @@
           text-color="#bfcbd9"
           active-text-color="#1890ff"
           :collapse="isCollapse"
+          router
         >
-        <div  v-for="item in apps" :key="item.activeRule">
+        <div  v-for="item in menu" :key="item.activeRule">
           <el-submenu :index="item.activeRule" v-if="item.childrens">
             <template slot="title">{{item.name}}</template>
             <el-menu-item :index="child.path" v-for="child in item.childrens" :key="child.path">{{child.name}}</el-menu-item>
@@ -51,6 +52,7 @@
         <el-main>
           <div id="appA" />
           <div id="appB"/>
+          <router-view v-if="!isMicroApp"></router-view>
         </el-main>
       </div>
     </el-container>
@@ -61,7 +63,7 @@
 import {
   registerMicroApps,
   runAfterFirstMounted,
-  setDefaultMountApp,
+  // setDefaultMountApp,
   start,
   initGlobalState,
 } from "qiankun";
@@ -73,30 +75,48 @@ export default {
       apps: [
         {
           name: "A应用",
-          entry: "http://192.168.17.231:9090/xc/MicroApp/",
+          entry: '//192.168.17.120:8081',//"http://192.168.17.231:9090/xc/MicroApp/",
           container: "#appA",
-          activeRule: "/xc/Portal/xc-micro-app",
+          activeRule: "/microApp/xc-micro-app",
           childrens:[
             {
               name:'A1',
-              path:'/xc/Portal/xc-micro-app#/'
+              path:'/microApp/xc-micro-app#/'
             },
             {
               name:'A2',
-              path:'/xc/Portal/xc-micro-app#/about'
+              path:'/microApp/xc-micro-app#/about'
             }
           ]
           // sandbox: {experimentalStyleIsolation: true}
         },
         {
           name: "B应用",
-          entry: "//localhost:8082",
+          entry: "//192.168.17.120:8082",
           container: "#appB",
           activeRule: "/xc-grafana",
         },
       ],
       text: "",
-      isCollapse: false
+      isCollapse: false,
+      menu: [{
+          name: "Portal应用",
+          // entry: "http://192.168.17.231:9090/xc/MicroApp/",
+          // container: "#appA",
+          activeRule: "/home",
+          childrens:[
+            {
+              name:'home',
+              path:'/home'
+            },
+            {
+              name:'About',
+              path:'/About'
+            }
+          ]
+          // sandbox: {experimentalStyleIsolation: true}
+        }],
+        isMicroApp: false
     };
   },
   created() {
@@ -106,10 +126,16 @@ export default {
       // fix hot-reload
       location.reload();
     }
+    this.menu = this.menu.concat(this.apps);
   },
   methods: {
     goto(title, href) {
-      window.history.pushState({}, title, href);
+      if(href.indexOf('/microApp')!==-1){   
+        window.history.pushState({}, title, href);
+        this.isMicroApp = true;
+      } else{
+        this.isMicroApp = false;
+      }
     },
     initQiankun() {
       registerMicroApps(this.apps, {
@@ -133,7 +159,7 @@ export default {
         ],
       });
 
-      setDefaultMountApp("/xc/Portal/xc-micro-app");
+      // setDefaultMountApp("/microApp/xc-micro-app");
 
       runAfterFirstMounted(() => {
         // eslint-disable-next-line no-console
