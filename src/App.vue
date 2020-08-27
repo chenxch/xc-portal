@@ -75,7 +75,7 @@ export default {
       apps: [
         {
           name: "A应用",
-          entry: '//localhost:8081',//"http://192.168.17.231:9090/xc/MicroApp/",
+          entry: '//localhost:8083',//"http://192.168.17.231:9090/xc/MicroApp/",
           container: "#appA",
           activeRule: "/microApp/xc-micro-app",
           childrens:[
@@ -90,12 +90,36 @@ export default {
           ]
           // sandbox: {experimentalStyleIsolation: true}
         },
-        // {
-        //   name: "B应用",
-        //   entry: "//192.168.17.120:8082",
-        //   container: "#appB",
-        //   activeRule: "/xc-grafana",
-        // },
+        {
+          name: "统一监控",
+          entry: "//localhost:8081/ptoBo.html",
+          container: "#appB",
+          activeRule: "/microApp/ptoBo",
+          childrens:[
+            {
+              name:'概况',
+              path:'/microApp/ptoBo#/generalSituation'
+            },
+            {
+              name:'告警管理',
+              path:'/microApp/ptoBo#/alarmManage'
+            }
+          ],
+          sandbox: {experimentalStyleIsolation: true}
+        },
+        {
+          name: "文件管理",
+          entry: "//localhost:8082/fileManage.html",
+          container: "#appB",
+          activeRule: "/microApp/fileManage",
+          childrens:[
+            {
+              name:'文件列表',
+              path:'/microApp/fileManage#/fm/fileManage'
+            }
+          ],
+          sandbox: {experimentalStyleIsolation: true}
+        }
       ],
       text: "",
       isCollapse: false,
@@ -182,7 +206,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lan="scss">
 #container {
   height: 100%;
 }
@@ -211,6 +235,9 @@ a {
     -webkit-box-shadow: 0 1px 4px rgba(0,21,41,.08);
     box-shadow: 0 1px 4px rgba(0,21,41,.08);
 }
+::v-deep .el-main{
+  padding: 10px;
+}
 .hamburger-container {
     line-height: 46px;
     height: 100%;
@@ -220,4 +247,5 @@ a {
     transition: background .3s;
     -webkit-tap-highlight-color: transparent;
 }
+
 </style>
